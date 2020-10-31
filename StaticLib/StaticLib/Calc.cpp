@@ -44,7 +44,7 @@ namespace Math
 		return t;
 	}
 
-	void printSumElementsOfVec(const std::vector<auto>& myVector)
+	void printSumElementsOfVec(const std::vector<double>& myVector)
 	{
 		auto summ = 0;
 		for (auto const& element : myVector)
@@ -52,7 +52,7 @@ namespace Math
 		std::cout << "Summ of vector = " << summ << std::endl;
 	}
 
-	auto sumElements2(const std::vector<auto>& myVector)
+	auto sumElements2(const std::vector<double>& myVector)
 	{
 		auto summ = 0;
 		for (auto const& element : myVector)

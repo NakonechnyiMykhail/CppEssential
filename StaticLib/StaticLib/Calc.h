@@ -27,10 +27,10 @@ namespace Math
 
 
 
-		static void printSumElementsOfVec(const std::vector<auto>& myVector);
+		static void printSumElementsOfVec(const std::vector<double>& myVector);
 
 
-		static auto sumElements2(const std::vector<auto>& myVector);
+		static auto sumElements2(const std::vector<double>& myVector);
 
 		static int max(int a, int b);
 

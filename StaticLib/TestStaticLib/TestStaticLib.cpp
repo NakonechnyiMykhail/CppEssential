@@ -3,9 +3,14 @@
 
 #include <iostream>
 #include "Calc.h"
+#include "Utils.h"
+#include <cstdlib> // atof()
 
-int main()
+int main(int argc, char* argv[])
 {
+    Utils::CommandArgs::CommandArgs(argc, argv, 2);
+    double a = atof(argv[0]);
+    double b = atof(argv[1]);
 
-    std::cout << Math::Arithmetic::Add(20, 40);
+    std::cout << Math::Arithmetic::Add(a, b);
 }
