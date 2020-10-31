@@ -8,9 +8,9 @@
 
 int main(int argc, char* argv[])
 {
-    Utils::CommandArgs::CommandArgs(argc, argv, 2);
-    double a = atof(argv[0]);
-    double b = atof(argv[1]);
+    Utils::CommandArgs cmd(argc, argv, 3);
+    double a = atof(argv[1]);
+    double b = atof(argv[2]);
 
     std::cout << Math::Arithmetic::Add(a, b);
 }

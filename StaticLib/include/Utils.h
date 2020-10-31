@@ -83,17 +83,13 @@ namespace Utils
 	public:
 		CommandArgs(int argc, char* argv[], int argCount);
 		~CommandArgs();
-		static void PrintArgs();
-		static void PrintArgCount();
+		void PrintArgs();
+		void PrintArgCount();
 
-		// HW -> create these functions
-		//	std::cout << "There are " << argc << " arguments:\n";
-
-		//for (int count = 0; count < argc; ++count)
-		//	std::cout << count << " " << argv[count] << '\n';
 	private:
-		std::vector<int> m_integerArgs;
-		std::vector<int> m_floatArgs;
+		int m_args;
+		std::vector<std::string> m_argv;
+
 	};
 
 }

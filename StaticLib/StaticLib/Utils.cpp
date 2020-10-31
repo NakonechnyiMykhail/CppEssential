@@ -14,6 +14,14 @@ Utils::CommandArgs::CommandArgs(int argc, char* argv[], int argCount)
 
 		exit(1);
 	}
+
+	m_args = argc;
+	for (size_t i = 0; i < m_args; i++)
+	{
+		m_argv.push_back(argv[i]); // .c_str()
+	}
+
+
 	/*
 	* getListDataOfIntegers -> {1, 4, 7}
 	* getListDataOfFloats -> {2, 3, 5}
@@ -32,4 +40,22 @@ Utils::CommandArgs::CommandArgs(int argc, char* argv[], int argCount)
 	std::cout << "Got integer: " << number << '\n';
 	*/
 	
+}
+
+Utils::CommandArgs::~CommandArgs()
+{
+
+}
+
+void Utils::CommandArgs::PrintArgs()
+{
+	for (const auto& str : m_argv)
+	{
+		std::cout << str << std::endl;
+	}
+}
+
+void Utils::CommandArgs::PrintArgCount()
+{
+	std::cout << "Count of args: " << m_args << std::endl;
 }
