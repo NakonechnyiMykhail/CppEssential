@@ -58,9 +58,12 @@ int main()
     // text
     // uppercase
     // nouppercase
-    std::cout.setf(std::ios::uppercase);
-    std::cout << std::uppercase << "rest api" << std::endl;
-    std::cout << std::nouppercase << "Rest API" << std::endl;
+    // std::cout.setf(std::ios::uppercase);
+    // std::cout << std::uppercase << "rest api" << std::endl;
+    // std::cout << std::nouppercase << "Rest API" << std::endl;
+    // tolower()
+    // toupper()
+
 
     return 0;
 }
