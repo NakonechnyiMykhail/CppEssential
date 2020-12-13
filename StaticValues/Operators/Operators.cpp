@@ -50,25 +50,99 @@ public:
     {
         return (m_dolls >= 0 && m_cents >= 0);
     } 
+    
+    Dollars& operator++()
+    {
+        // + 1.0 dollar
+        m_dollars++;
+        m_dolls++;
+
+        // += 0.01
+        // m_dollars += 0.01;
+        // m_cents++;
+        return *this;
+    }
+    Dollars& operator--()
+    {
+        if (m_dolls > 1)
+        {
+            // - 1.0 dollar
+            m_dollars--;
+            m_dolls--;
+        }
+        else 
+        {
+            std::cerr << "ballance is minus!" << std::endl;
+        }
+
+        return *this;
+    }
+    Dollars operator++(int)
+    {
+        // + 1.0 dollar
+        Dollars temp(m_dollars); // 7.23
+        ++(*this);
+
+        // += 0.01
+        // m_dollars += 0.01;
+        // m_cents++;
+        return temp;
+    }
+    Dollars operator--(int);
     friend bool operator> (const Dollars& d1, const Dollars& d2) 
-    { // 7.43 > 7.23
-        return ((d1.m_dolls > d2.m_dolls || d1.m_dolls == d2.m_dolls) && d1.m_cents > d2.m_cents);
+    { 
+        // 4.21 > 4.17 -> +
+        // 6.22 > 4.22 -> +
+        // 6.22 > 4.21 -> +
+        // 4.21 > 5.22 -> +
+        // 4.21 > 4.22 -> +
+        // 4.21 > 4.21 -> +                 
+        // 4.23 > 5.22 -> +
+        return (
+            (d1.m_dolls > d2.m_dolls and d1.m_cents > d2.m_cents)   ||
+            (d1.m_dolls == d2.m_dolls and d1.m_cents > d2.m_cents)  ||
+            (d1.m_dolls > d2.m_dolls and d1.m_cents == d2.m_cents)
+        );
     }
     friend bool operator< (const Dollars& d1, const Dollars& d2) 
-    {
-        return (d1.m_dolls < d2.m_dolls && d1.m_cents < d2.m_cents);
+    { 
+        // 7.43 < 7.23 -> true && false => false 
+        // 6.22 < 4.22 -> false && true => false
+        // 6.22 < 4.21 -> false && false => false
+        // 4.21 < 5.22 -> true && true => true
+        // 4.21 < 4.22 -> true && true => true
+        // 4.21 < 4.21 ->                   true ???
+        // 4.23 < 5.22 -> true && false => false ???
+        return (
+            (d1.m_dolls < d2.m_dolls and d1.m_cents < d2.m_cents)   ||
+            (d1.m_dolls == d2.m_dolls and d1.m_cents < d2.m_cents)  ||
+            (d1.m_dolls < d2.m_dolls and d1.m_cents == d2.m_cents)
+        );
     }
-    friend bool operator> (const Dollars& d1, const Dollars& d2) 
-    {
-        return (d1.m_dolls > d2.m_dolls && d1.m_cents > d2.m_cents);
-    }
+
     friend bool operator>= (const Dollars& d1, const Dollars& d2) 
     {
-        return (d1.m_dolls >= d2.m_dolls && d1.m_cents >= d2.m_cents);
+        // 5.22 >= 4.23 
+        return (
+            (d1.m_dolls >= d2.m_dolls and d1.m_cents >= d2.m_cents)   ||
+            (d1.m_dolls > d2.m_dolls and d1.m_cents < d2.m_cents)
+        );
     }
     friend bool operator<= (const Dollars& d1, const Dollars& d2) 
     {
-        return (d1.m_dolls <= d2.m_dolls && d1.m_cents <= d2.m_cents);
+        // 7.23 <= 7.43 +
+        // 4.22 <= 6.22 +
+        // 6.22 <= 4.21 +
+        // 4.21 <= 5.22 +
+        // 4.21 <= 4.21 +  
+        // 4.23 <= 5.22 +
+        // 4.22 <= 2.22 +
+        // 4.21 <= 2.24 +
+
+        return (
+            (d1.m_dolls <= d2.m_dolls and d1.m_cents <= d2.m_cents)   ||
+            (d1.m_dolls < d2.m_dolls and d1.m_cents > d2.m_cents)
+        );
     }
     friend bool operator== (const Dollars& d1, const Dollars& d2) 
     {
@@ -76,7 +150,7 @@ public:
     }
     friend bool operator!= (const Dollars& d1, const Dollars& d2) 
     {
-        return (d1.m_dolls != d2.m_dolls && d1.m_cents != d2.m_cents);
+        return (d1.m_dolls != d2.m_dolls || d1.m_cents != d2.m_cents);
     }
     void print()
     {
@@ -141,24 +215,47 @@ int main()
     // std::cout << in_dol;
 
 std::cout << "Enter count of money:";
-    Dollars in;
-    std::cin >> in;
-    std::cout << in;
-    std::cout << "Enter the amount spent:";
-    Dollars spent_Dollars;
-    std::cin >> spent_Dollars;
-    in = in - spent_Dollars;
-    std::cout << -spent_Dollars;
+    // Dollars in;
+    // std::cin >> in;
+    // std::cout << in;
+    // std::cout << "Enter the amount spent:";
+    // Dollars spent_Dollars;
+    // std::cin >> spent_Dollars;
+    // in = in - spent_Dollars;
+    // std::cout << -spent_Dollars;
 
-    if (!in)
-    {
-        std::cout << "You spent all your money" << std::endl;
-    }
-    else {
-        std::cout << "You still have money" << std::endl;
-    }
+    // if (!in)
+    // {
+    //     std::cout << "You spent all your money" << std::endl;
+    // }
+    // else {
+    //     std::cout << "You still have money" << std::endl;
+    // }
 
     // !true == false
+
+    Dollars d1(7.23), d2(23.01);
+    // std::cin >> d1;
+    // std::cin >> d2;
+    // if (d1 > d2)
+    // {
+    //     std::cout << d1 << " > " << d2 << std::endl;
+    // }
+
+    // //++a - pre
+    // //a++ - post
+    // int a = 5;
+
+    // std::cout << a++ << std::endl; // 5
+    // std::cout << ++a << std::endl; // 7
+
+    // std::cout << ++a << std::endl; // 8
+    // std::cout << a++ << std::endl; // 8
+
+    std::cout << d1 << std::endl;
+    std::cout << ++d1 << std::endl;
+    std::cout << d2++ << std::endl;
+    std::cout << d2 << std::endl;
 }
 
 // for (int i = 0, count = 1; i < 10000; i++)
@@ -172,3 +269,9 @@ std::cout << "Enter count of money:";
     
 
 // }
+
+
+// ++, --
+// [] (vector<int> vec -> push => vec[7])
+// ()
+// =
