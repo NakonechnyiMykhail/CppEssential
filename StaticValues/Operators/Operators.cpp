@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cassert> // assert
 class Dollars
 {
 public:
@@ -15,9 +16,35 @@ public:
         m_dollars = dollars;
         m_dolls = static_cast<int>(dollars);
         m_cents = static_cast<int>((dollars - m_dolls) * 100);
+        m_doll[0] = m_dolls;
+        m_doll[1] = m_cents;
     }
     // 0.00000001
-    int getDollars() const { return m_dollars; }
+    double getDollars() const { return m_dollars; }
+    int getDolls() const { return m_dolls; }
+    int getCents() const { return m_cents; }
+
+    int& operator[] (const int index)
+    {
+        // Dollars d(8.76);
+        // d[0] -> m_dolls -> 8
+        // d[1] -> m_cents -> 76
+        assert(index == 0 || index == 1); // index >=0 && index <= 10 (int m_doll[10];)
+
+        return m_doll[index];
+    } 
+    double& operator() (int dollars, int cents)
+    {
+        // d1( 0,  2)
+        // d1(-1, 23)
+        // d1( 0,-22)
+
+        // !! only for positive values
+        assert(dollars >= 0 && cents >=0);
+        m_dollars = static_cast<double>(dollars + (cents * 0.01));
+        return m_dollars;
+    }
+
     friend Dollars operator+(const Dollars& d1, const Dollars& d2)
     {
         return Dollars(d1.getDollars() + d2.getDollars());
@@ -88,7 +115,19 @@ public:
         // m_cents++;
         return temp;
     }
-    Dollars operator--(int);
+    Dollars operator--(int)
+    {
+        Dollars temp(m_dollars);
+        if (temp > 1)
+        {
+            --(*this);
+        }
+        else
+        {
+            std::cout << "Ballance is minus!" << std::endl;
+        }
+        return *this;
+    }
     friend bool operator> (const Dollars& d1, const Dollars& d2) 
     { 
         // 4.21 > 4.17 -> +
@@ -119,7 +158,8 @@ public:
             (d1.m_dolls < d2.m_dolls and d1.m_cents == d2.m_cents)
         );
     }
-
+    friend bool operator> (const Dollars& d1, const int& d2);
+    friend bool operator< (const Dollars& d1, const int& d2);
     friend bool operator>= (const Dollars& d1, const Dollars& d2) 
     {
         // 5.22 >= 4.23 
@@ -156,12 +196,35 @@ public:
     {
         std::cout << m_dollars << " dollars";
     }
+    void countCoins()
+    {
+        // task - write algorithm for calculate minimal count of coins
+        // Cents:
+        // 1   pennies
+        // 5   nickels
+        // 10  dimes
+        // 25  quarters
 
+        // input dollars:            9.41
+        // count coins and output:   4*9 + 25+10+5+1 => 40 
+        int p = 0, n = 0, d = 0, q = 0, z, count;
+        q += m_dolls * 4;
+        q += m_cents / 25;
+        z = m_cents % 25;
+        d += z / 10;
+        z = z % 10;
+        n += z / 5; // n = n + z/5;
+        z = z % 5;
+        p += z / 1; // p = z;
+        count = q + d + n + p;
+        std::cout << "Counts of coins: " << count << std::endl;
+    }
     friend std::ostream& operator<< (std::ostream& out, const Dollars &dol)
     {
         //out << std::fixed;
         //out << "Dollars: (" << std::setprecision(2) << dol.m_dollars << ")" << dol.m_dolls << '.' << dol.m_cents << std::endl;
-        out << "Dollars: " << dol.m_dolls << '.' << abs(dol.m_cents) << std::endl;
+        if (abs(dol.m_cents) < 10) out << "\nDollars: " << dol.m_dolls << ".0" << abs(dol.m_cents);
+        else out << "\nDollars: " << dol.m_dolls << '.' << abs(dol.m_cents);
         return out;
     }
     friend std::istream& operator>> (std::istream& in, Dollars& dol)
@@ -185,9 +248,12 @@ public:
 private:
     double m_dollars; // 0.0 == 0.0000000000013
     // 7.76 -> m_dolls => 7 / m_cents = 76
-
+    // unsigned int m_dolls; // целая
     int m_dolls; // целая
     int m_cents; // дробная
+
+    // array
+    int m_doll[2];
 };
 
 // operator/
@@ -214,7 +280,7 @@ int main()
     // std::cin >> in_dol;
     // std::cout << in_dol;
 
-std::cout << "Enter count of money:";
+    //std::cout << "Enter count of money:";
     // Dollars in;
     // std::cin >> in;
     // std::cout << in;
@@ -234,14 +300,17 @@ std::cout << "Enter count of money:";
 
     // !true == false
 
-    Dollars d1(7.23), d2(23.01);
+    Dollars d1(7.23), d2(23.01), d3;
+    //std::cout << d1[0] << "\t" << d2[1] << std::endl;
+    std::cout << d3(1,5) << std::endl;
+    //d2.countCoins();
+
     // std::cin >> d1;
     // std::cin >> d2;
     // if (d1 > d2)
     // {
     //     std::cout << d1 << " > " << d2 << std::endl;
     // }
-
     // //++a - pre
     // //a++ - post
     // int a = 5;
@@ -252,10 +321,10 @@ std::cout << "Enter count of money:";
     // std::cout << ++a << std::endl; // 8
     // std::cout << a++ << std::endl; // 8
 
-    std::cout << d1 << std::endl;
-    std::cout << ++d1 << std::endl;
-    std::cout << d2++ << std::endl;
-    std::cout << d2 << std::endl;
+    // std::cout << d1 << std::endl;
+    // std::cout << ++d1 << std::endl;
+    // std::cout << d2++ << std::endl;
+    // std::cout << d2 << std::endl;
 }
 
 // for (int i = 0, count = 1; i < 10000; i++)
@@ -275,3 +344,6 @@ std::cout << "Enter count of money:";
 // [] (vector<int> vec -> push => vec[7])
 // ()
 // =
+
+
+
