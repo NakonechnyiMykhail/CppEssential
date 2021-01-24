@@ -59,3 +59,49 @@ void Utils::CommandArgs::PrintArgCount()
 {
 	std::cout << "Count of args: " << m_args << std::endl;
 }
+
+
+Utils::File::File(const std::string& filename, bool isRead, std::vector<std::string>& vec) :
+	m_filename(filename)
+{
+	if (isRead)
+	{
+		m_ifile.open(m_filename, std::ios::out);
+		if (!m_ifile)
+		{
+			std::cerr << "\n\n" << m_filename << " could not be opened for reading!" << std::endl;
+			exit(1);
+		}
+		if (m_ifile.is_open()) // read
+		{
+			std::string line;
+			while (std::getline(m_ifile, line))
+			{
+				vec.push_back(line);
+			}
+		}
+	}
+	else
+	{
+		m_ofile.open(m_filename, std::ios::in);
+		if (!m_ofile)
+		{
+			std::cerr << "\n\n" << m_filename << " could not be opened for writing!" << std::endl;
+			exit(1);
+		}
+		if (m_ofile.is_open()) // write
+		{
+			for (auto& str : vec)
+			{
+				m_ofile << str << std::endl;
+			}
+		}
+
+	}
+}
+
+Utils::File::~File()
+{
+	m_ifile.close();
+	m_ofile.close();
+}

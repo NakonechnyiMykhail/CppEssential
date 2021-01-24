@@ -73,25 +73,20 @@ namespace Utils
 	class File
 	{
 	public:
-		File();
+		File(const std::string& filename, bool isRead, std::vector<std::string>& vec);
 		~File();
 		static std::vector<std::string> ReadFile();
 		static void WriteFile();
 		/*
 		//https://github.com/NakonechnyiMykhail/cpp1901/blob/master/lesson30/file_write.cpp
 		//https://github.com/NakonechnyiMykhail/cpp1901/blob/master/lesson30/file_read.cpp
-		//std::fstream file("SomeText.txt", std::ios::in | std::ios::out);
-		//
-		//
-		//if (!file)
-		//{
-		//	std::cerr << "FileNmae.txt could not be opened for writing/reading!" << std::endl;
-		//	exit(1);
-		//}
+
 		*/
 
 	private:
-		std::fstream m_file;
+		std::string m_filename;
+		std::ifstream m_ifile;
+		std::ofstream m_ofile;
 	};
 
 	class CommandArgs

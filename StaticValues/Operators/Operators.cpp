@@ -8,6 +8,7 @@ class Dollars
 public:
     Dollars(double dollars) 
     { 
+        // https://www.baeldung.com/java-separate-double-into-integer-decimal-parts
         m_dollars = dollars;
         m_dolls = (int) dollars;
         m_cents = dollars - m_dolls;
