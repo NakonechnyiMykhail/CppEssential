@@ -37,7 +37,7 @@ public:
 };
 Fraction::Fraction()
 {
-    m_denominator = setDenominator(get_positive_int());
+    m_denominator = setDenominator(get_positive_int(""));
 }
 Fraction::Fraction(float number)
 {
@@ -103,6 +103,33 @@ std::ostream& Fraction::operator<<(std::ostream& out, const Fraction& frac)
         out << frac.getNumerator() << " / " << frac.getDenominator() << "\n";
         return out;
     }
+}
+
+inline uint16_t get_positive_int(std::string category)
+{
+    /*
+    Funtion:    print category and check inputting varieble for correct data
+    Get:        integer varieble from user 
+    Return:     int
+    */
+    uint16_t number{0};
+    while (true)
+    {
+        std::cout << "Enter your " << category << ": ";
+        std::cin >> number;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(32767, '\n');
+            continue;
+        }
+        // our data shoul be Non-zero
+        if (number <= 0) { continue; }
+
+        break;
+    }
+    return number;
 }
 
 int main()
