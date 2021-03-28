@@ -16,9 +16,9 @@ private:
     QImage  m_image;
     QRect   m_rect;
 
-    static const int INITIAL_X  = 111;
-    static const int INITIAL_Y  = 111;
-    static const int RIGHT_EDGE = 111;
+    static const int INITIAL_X  = 230;
+    static const int INITIAL_Y  = 355;
+    static const int RIGHT_EDGE = 300;
 
 public:
     void resetState();
