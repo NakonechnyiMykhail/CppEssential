@@ -130,11 +130,15 @@ void        Breakout::drawObjects(QPainter * painter)
     }
 }
 
-void        Breakout::finishGame(QPainter * painter, QString message)
+void
+Breakout::finishGame(QPainter * painter, QString message)
 {
     QFont font("Courier", 15, QFont::DemiBold);
     QFontMetrics fm(font);
     int textWidth = fm.width(message);
+
+    // for Qt6
+    // QSize textWidth2 = fm.size(Qt::TextSingleLine, message);
 
     painter->setFont(font);
     int h = height();
@@ -142,6 +146,9 @@ void        Breakout::finishGame(QPainter * painter, QString message)
 
     painter->translate(QPoint(w / 2, h / 2));
     painter->drawText(-textWidth / 2, 0, message);
+
+    // for qt6 ???
+    // painter->drawText(-textWidth2 / 2, 0, message);
 }
 
 void        Breakout::moveObjects()

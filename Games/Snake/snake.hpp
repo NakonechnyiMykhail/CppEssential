@@ -1,6 +1,8 @@
 #ifndef SNAKE_HPP
 #define SNAKE_HPP
 
+// #pragma once
+
 #include <QWidget>
 #include <QKeyEvent>
 
@@ -18,7 +20,10 @@ public:
 
 protected:
     //
-    void paintEvent(QPaintEvent *);
+    // TYPE* smth
+    // TYPE * smth
+    // TYPE *smth
+    void paintEvent(QPaintEvent*);
     void timerEvent(QTimerEvent *);
     void keyPressEvent(QKeyEvent *);
 private:
@@ -59,3 +64,9 @@ private:
 
 };
 #endif // SNAKE_HPP
+
+
+//- - - - - - - -
+//- - X - - - - -
+//- - - - - - - -
+//- - - X - - X -

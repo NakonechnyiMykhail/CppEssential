@@ -118,12 +118,16 @@ void Snake::checkApple()
 
 void Snake::checkCollision()
 {
+    // check for touch between head and body
     for (int var = dots; var > 0; --var) { if ( ( var > 4) && (x[0] == x[var]) && (y[0] == y[var])) { inGame = false; } }
 
+    // check for touch between head and conditions(areas) of window
     if (y[0] >= B_HEIGHT)   { inGame = false; }
     if (y[0] < 0)           { inGame = false; }
     if (x[0] >= B_WIDTH)    { inGame = false; }
     if (x[0] < 0)           { inGame = false; }
+
+    // clear memory for timer
     if (!inGame)            { killTimer(timerId); }
 }
 
