@@ -1,0 +1,16 @@
+1. choice
+    - P v P
+    - P v Bot
+
+turn = 1
+turn = 2
+
+2. C == bot
+    from python: 
+        realization 
+    - level: 
+        low
+        middle
+        high
+
+3. our code -> class (OOP)
