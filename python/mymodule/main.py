@@ -10,6 +10,10 @@ def main():
     calc = Calculator()
     print(calc.add())
 
+    # TODO get and set
+    
+    # return 
+
 # main()
 
 if __name__ == '__main__':
